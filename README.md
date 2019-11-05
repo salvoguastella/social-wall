@@ -1,7 +1,6 @@
 Find the live project on 
 [http://www.salvoguastella.altervista.org/social-wall/](http://www.salvoguastella.altervista.org/social-wall/)
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
 
