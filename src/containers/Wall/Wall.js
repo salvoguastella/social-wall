@@ -5,6 +5,7 @@ import classes from './Wall.module.scss'
 import Masonry from 'react-masonry-css'
 import Filters from '../../components/Filters/Filters'
 import Block from '../../components/Block/Block'
+import AddButton from '../../components/AddButton/AddButton'
 
 const breakpointColumnsObj = {
     default: 4,
@@ -16,25 +17,32 @@ const breakpointColumnsObj = {
 export class Wall extends Component {
     state = {
         items: [],
-        filter: null
+        filter: null, 
+        isLoading: false
     }
     componentDidMount = () => {
         this.getData();
     }
 
     getData = () => {
+        this.setState({isLoading: true});
+        const prevItems = this.state.items;
         axios.get("http://private-cc77e-aff.apiary-mock.com/posts")
             .then((res => {
-                const _items = [];
+                const _items = prevItems;
                 console.log(res.data.items);
                 for(const item in res.data.items){
                     _items.push(res.data.items[item]);
                 }
                 this.setState({
-                    items: _items
+                    items: _items,
+                    isLoading: false
                 })
             }))
-            .catch(error => console.log(error))
+            .catch(error => {
+                console.log(error);
+                this.setState({isLoading: false});
+            })
     }
 
     setFilter = filter =>  {
@@ -63,6 +71,7 @@ export class Wall extends Component {
                         else return null
                     })}
                 </Masonry>
+                <AddButton click={this.getData} loading={this.state.isLoading}></AddButton>
             </div>
         )
     }
