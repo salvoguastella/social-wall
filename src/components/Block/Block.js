@@ -4,6 +4,7 @@ import brokenImageUrl from '../../assets/broken_image.png'
 import twitterLogo from '../../assets/twitter.png'
 import instagramLogo from '../../assets/instagram.png'
 import manualLogo from '../../assets/manual.png'
+import LazyLoad from 'react-lazyload'
 
 const setBrokenImagePlaceholder = ev => {
     ev.target.src = brokenImageUrl;
@@ -26,11 +27,49 @@ const parseText = text => {
     return parsedText;
 }
 
+const timeDifference = previous => {
+
+    const current = new Date().getTime();
+
+    var msPerMinute = 60 * 1000;
+    var msPerHour = msPerMinute * 60;
+    var msPerDay = msPerHour * 24;
+    var msPerMonth = msPerDay * 30;
+    var msPerYear = msPerDay * 365;
+
+    var elapsed = current - previous;
+
+    if (elapsed < msPerMinute) {
+         return Math.round(elapsed/1000) + ' seconds ago';   
+    }
+
+    else if (elapsed < msPerHour) {
+         return Math.round(elapsed/msPerMinute) + ' minutes ago';   
+    }
+
+    else if (elapsed < msPerDay ) {
+         return Math.round(elapsed/msPerHour ) + ' hours ago';   
+    }
+
+    else if (elapsed < msPerMonth) {
+        return 'approximately ' + Math.round(elapsed/msPerDay) + ' days ago';   
+    }
+
+    else if (elapsed < msPerYear) {
+        return 'approximately ' + Math.round(elapsed/msPerMonth) + ' months ago';   
+    }
+
+    else {
+        return 'approximately ' + Math.round(elapsed/msPerYear ) + ' years ago';   
+    }
+}
+
 const Block = (props) => {
     let label = null;
     let user = null;
     let content = null;
-    let date = props.timeStamp;
+    //let date = props.timeStamp;
+    let date = timeDifference(new Date(props.timeStamp).getTime());
     switch(props.service_id){
         case "1":
         //tweet
@@ -40,14 +79,16 @@ const Block = (props) => {
             </div>
         )
         user = (
-            <div className={classes.BlockHeader}>   
-                <img src={props.data.user.avatar} 
-                    onError = {setBrokenImagePlaceholder}
-                    crossOrigin="anonymous"
-                    alt={props.data.user.username} 
-                    title={props.data.user.username}/>
+            <a href={"https://twitter.com/" + props.data.user.username} className={classes.BlockHeader} target="_black">   
+                <LazyLoad height={200}>
+                    <img src={props.data.user.avatar} 
+                        onError = {setBrokenImagePlaceholder}
+                        crossOrigin="anonymous"
+                        alt={props.data.user.username} 
+                        title={props.data.user.username}/>
+                </LazyLoad>
                 <span>{props.data.user.username}</span>
-            </div>
+            </a>
         )
         content = (
             <div className={classes.BlockContent}>
@@ -63,21 +104,25 @@ const Block = (props) => {
             </div>
         )
         user = (
-            <div className={classes.BlockHeader}>   
-                <img src={props.data.user.avatar} 
-                    onError = {setBrokenImagePlaceholder}
-                    crossOrigin="anonymous"
-                    alt={props.data.user.username} 
-                    title={props.data.user.username}/>
+            <a href={"https://instagram.com/" + props.data.user.username} className={classes.BlockHeader} target="_black">   
+                <LazyLoad height={200}>
+                    <img src={props.data.user.avatar} 
+                        onError = {setBrokenImagePlaceholder}
+                        crossOrigin="anonymous"
+                        alt={props.data.user.username} 
+                        title={props.data.user.username}/>
+                </LazyLoad>
                 <span>{props.data.user.username}</span>
-            </div>
+            </a>
         )
         content = (
             <div className={classes.BlockContent}>
+                <LazyLoad height={200}>
                 <img src={props.data.image.medium} 
                     onError = {setBrokenImagePlaceholder}
                     crossOrigin="anonymous"
                     alt=""/>
+                </LazyLoad>
                 <span dangerouslySetInnerHTML={{ __html: parseText(props.data.caption)}}></span>
             </div>
         )
@@ -91,7 +136,9 @@ const Block = (props) => {
         )
         content = (
             <div className={classes.BlockContent}>
-                <img src={props.data.image_url} alt={props.data.link_text} title={props.data.link_text}/>
+                <LazyLoad height={200}>
+                    <img src={props.data.image_url} alt={props.data.link_text} title={props.data.link_text}/>
+                </LazyLoad>
                 <span dangerouslySetInnerHTML={{ __html: parseText(props.data.text)}}></span>
             </div>
         )

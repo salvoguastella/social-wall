@@ -7,7 +7,6 @@ import HeroInstagram from '../../assets/hero_instagram.png'
 import HeroManual from '../../assets/hero_manual.png'
 
 const Filters = (props) => {
-    console.log(props.type);
     let Hero = null
     switch(props.type){
         case 1:
@@ -26,11 +25,12 @@ const Filters = (props) => {
     return (
         <div className={classes.Filters}>
             <div className={classes.Hero}>{Hero}</div>
+            <div className={classes.Title}>Fashion Wall</div>
             <div className={classes.FilterBar}>
-                <Filter type="none" click={() => props.click(null)}/>
-                <Filter type="twitter" click={() => props.click(1)}/>
-                <Filter type="instagram" click={() => props.click(2)}/>
-                <Filter type="manual" click={() => props.click(5)}/>
+                <Filter type="none" isActive={!props.type} click={() => props.click(null)}/>
+                <Filter type="twitter" isActive={props.type === 1} click={() => props.click(1)}/>
+                <Filter type="instagram" isActive={props.type === 2} click={() => props.click(2)}/>
+                <Filter type="manual" isActive={props.type === 5} click={() => props.click(5)}/>
             </div>
         </div>
     )

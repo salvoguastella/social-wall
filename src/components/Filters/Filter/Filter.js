@@ -19,8 +19,10 @@ const Filter = (props) => {
         default:
            icon = (<div>ALL</div>);
     }
+    const filterClasses = [classes.Filter];
+    if(props.isActive) filterClasses.push(classes.Active)
     return (
-        <div className={classes.Filter} onClick={props.click}>
+        <div className={filterClasses.join(" ")} onClick={props.click}>
             {icon}
         </div>
     )

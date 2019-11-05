@@ -1,4 +1,5 @@
 $red:  rgb(202, 28, 28);
+$lightRed:  rgb(247, 14, 14);
 
 .Filter{
     background-color: $red;
@@ -17,4 +18,8 @@ $red:  rgb(202, 28, 28);
         line-height: 34px;
         font-size: 14px;
     }
+}
+
+.Active{
+    background-color: $lightRed;
 }

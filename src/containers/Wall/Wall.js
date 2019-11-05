@@ -30,7 +30,6 @@ export class Wall extends Component {
         axios.get("http://private-cc77e-aff.apiary-mock.com/posts")
             .then((res => {
                 const _items = prevItems;
-                console.log(res.data.items);
                 for(const item in res.data.items){
                     _items.push(res.data.items[item]);
                 }
