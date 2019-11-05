@@ -1,0 +1,67 @@
+.Block{
+    border: 1px solid black;
+    width: 400px;
+    padding: 28px 24px 24px;
+    margin-bottom: 20px;
+    position:relative;
+    border-radius: 4px;
+}
+
+.BlockLabel{
+    position:absolute;
+    top: -8px;
+    right: -8px;
+    background-color: rgb(202, 28, 28);
+    padding: 4px 4px 3px;
+    color: white;
+    border-radius: 8px;
+    img{
+        width: 32px;
+        height: 32px;
+    }
+}
+
+.BlockTitle{
+    font-size: 18px;
+    display:block;
+    margin-bottom: 16px;
+}
+
+.BlockHeader{
+    display: flex;
+    align-items: center;
+    margin-bottom: 16px;
+    img{
+        width: 40px;
+        height: 40px;
+        object-fit: cover;
+        border-radius: 50%;
+        margin-right: 16px;
+    }
+    span{
+        font-weight: bold;
+        font-size: 16px;
+        transform: translateY(-2px);
+    }
+}
+
+.BlockContent{
+    margin-bottom: 24px;
+    img{
+        margin-bottom: 20px;
+        width: 100%;
+    }
+    span{
+        display:block;
+        font-size: 14px;
+        color: #666;
+    }
+}
+
+.BlockDate{
+    text-align: right;
+    font-size: 10px;
+    font-style: italic;
+    color: #666;
+}
+
