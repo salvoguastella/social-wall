@@ -46,7 +46,7 @@ export class Wall extends Component {
     render() {
         return (
             <div>
-                <Filters />
+                <Filters click={this.setFilter} type={this.state.filter}/>
                 <Masonry
                     breakpointCols={breakpointColumnsObj}
                     className={classes.Wall}

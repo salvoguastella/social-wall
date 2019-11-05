@@ -9,13 +9,6 @@ const setBrokenImagePlaceholder = ev => {
     ev.target.src = brokenImageUrl;
 }
 
-const cleanTitle = title => {
-    let cleanTitle = title.replace("Tweet:","");
-    cleanTitle = cleanTitle.replace("Instagram:","");
-    cleanTitle = cleanTitle.replace("Manual:","");
-    return cleanTitle.trim();
-}
-
 const linkify = text => {
     var exp = /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig;
     return text.replace(exp, url => `<a href="${url}" target="_blank">${url}</a>`);
