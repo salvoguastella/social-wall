@@ -6,21 +6,24 @@ import HeroTwitter from '../../assets/hero_twitter.png'
 import HeroInstagram from '../../assets/hero_instagram.png'
 import HeroManual from '../../assets/hero_manual.png'
 
-const Filters = (props) => {
-    let Hero = null
-    switch(props.type){
+const setHeader = (type) => {
+    switch(type){
         case 1:
-            Hero = (<img src={HeroTwitter} alt="Hero Twitter"/>);
-        break;
+            return (<img src={HeroTwitter} alt="Hero Twitter"/>);
         case 2:
-            Hero = (<img src={HeroInstagram} alt="Hero Instagram"/>);
-        break;
+            return (<img src={HeroInstagram} alt="Hero Instagram"/>);
         case 5:
-            Hero = (<img src={HeroManual} alt="Hero Manual"/>);
-        break;
+            return (<img src={HeroManual} alt="Hero Manual"/>);
         default:
-            Hero = (<img src={HeroAll} alt="Hero"/>);
+            return (<img src={HeroAll} alt="Hero"/>);
     }
+}
+
+const Filters = (props) => {
+
+    let Hero = null;
+
+    Hero = setHeader(props.type);
 
     return (
         <div className={classes.Filters}>

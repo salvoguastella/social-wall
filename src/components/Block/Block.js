@@ -4,29 +4,34 @@ import brokenImageUrl from '../../assets/broken_image.png'
 import twitterLogo from '../../assets/twitter.png'
 import instagramLogo from '../../assets/instagram.png'
 import manualLogo from '../../assets/manual.png'
-import LazyLoad from 'react-lazyload'
+import LazyLoad, {forceCheck} from 'react-lazyload'
 
+//most of the images are broken. I set a fallback
 const setBrokenImagePlaceholder = ev => {
     ev.target.src = brokenImageUrl;
 }
 
+//parse urls and convert them to links
 const linkify = text => {
     var exp = /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig;
     return text.replace(exp, url => `<a href="${url}" target="_blank">${url}</a>`);
 }
 
+//parse hash and user and convert them to links
 const parseHashAndUser = text => {
     let parsedText = text.replace(/(^|\s)(#[a-z\d-]+)/ig, hash => ` <a href='https://www.instagram.com/explore/tags/${hash.replace("#", "").trim()}' target='_blank'>${hash.trim()}</a>`);
     parsedText = parsedText.replace(/(^|\s)(@[a-z\d-]+)/ig, user => ` <a href='https://twitter.com/${user.replace("@", "").trim()}' target='_blank'>${user.trim()}</a>`);
     return (parsedText);
 }
 
+//call both parse functions, return processed text
 const parseText = text => {
     let parsedText = linkify(text);
     parsedText = parseHashAndUser(parsedText);
     return parsedText;
 }
 
+//calculate relative time
 const timeDifference = previous => {
 
     const current = new Date().getTime();
@@ -65,6 +70,7 @@ const timeDifference = previous => {
 }
 
 const Block = (props) => {
+    // generate labels, header, content and date dinamically
     let label = null;
     let user = null;
     let content = null;
@@ -80,7 +86,7 @@ const Block = (props) => {
         )
         user = (
             <a href={"https://twitter.com/" + props.data.user.username} className={classes.BlockHeader} target="_black">   
-                <LazyLoad height={200}>
+                <LazyLoad height={40}>
                     <img src={props.data.user.avatar} 
                         onError = {setBrokenImagePlaceholder}
                         crossOrigin="anonymous"
@@ -105,7 +111,7 @@ const Block = (props) => {
         )
         user = (
             <a href={"https://instagram.com/" + props.data.user.username} className={classes.BlockHeader} target="_black">   
-                <LazyLoad height={200}>
+                <LazyLoad height={40}>
                     <img src={props.data.user.avatar} 
                         onError = {setBrokenImagePlaceholder}
                         crossOrigin="anonymous"
@@ -117,7 +123,7 @@ const Block = (props) => {
         )
         content = (
             <div className={classes.BlockContent}>
-                <LazyLoad height={200}>
+                <LazyLoad height={300}>
                 <img src={props.data.image.medium} 
                     onError = {setBrokenImagePlaceholder}
                     crossOrigin="anonymous"
@@ -136,7 +142,7 @@ const Block = (props) => {
         )
         content = (
             <div className={classes.BlockContent}>
-                <LazyLoad height={200}>
+                <LazyLoad height={300}>
                     <img src={props.data.image_url} alt={props.data.link_text} title={props.data.link_text}/>
                 </LazyLoad>
                 <span dangerouslySetInnerHTML={{ __html: parseText(props.data.text)}}></span>
@@ -147,6 +153,10 @@ const Block = (props) => {
         //unknown
         content = "Unknown"
     }
+
+    //post images are lazyloaded as we scroll. We need to forceCheck when the component get mounted,
+    //otherwise nothing would be loaded
+    setTimeout(forceCheck, 100);
 
     return (
         <div className={classes.Block}>

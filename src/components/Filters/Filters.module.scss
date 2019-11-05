@@ -1,15 +1,27 @@
 .Filters{
     position: relative;
+    height: 200px;
 }
 
 .Hero{
-    background: lightblue;
+    background: white;
     width: 100%;
     height: 200px;
+    overflow: hidden;
     img{
         object-fit: cover;
-        height: 100%;
+        height: calc(100% + 50px);
         width: 100%;
+        animation: HeroAnimation 0.3s ease-in-out forwards;
+    }
+}
+
+@keyframes HeroAnimation{
+    from{
+        opacity: 0;
+    }
+    to{
+        opacity: 1;
     }
 }
 
