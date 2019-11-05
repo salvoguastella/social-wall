@@ -16,8 +16,24 @@ const cleanTitle = title => {
     return cleanTitle.trim();
 }
 
+const linkify = text => {
+    var exp = /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig;
+    return text.replace(exp, url => `<a href="${url}" target="_blank">${url}</a>`);
+}
+
+const parseHashAndUser = text => {
+    let parsedText = text.replace(/(^|\s)(#[a-z\d-]+)/ig, hash => ` <a href='https://www.instagram.com/explore/tags/${hash.replace("#", "").trim()}' target='_blank'>${hash.trim()}</a>`);
+    parsedText = parsedText.replace(/(^|\s)(@[a-z\d-]+)/ig, user => ` <a href='https://twitter.com/${user.replace("@", "").trim()}' target='_blank'>${user.trim()}</a>`);
+    return (parsedText);
+}
+
+const parseText = text => {
+    let parsedText = linkify(text);
+    parsedText = parseHashAndUser(parsedText);
+    return parsedText;
+}
+
 const Block = (props) => {
-    console.log(props);
     let label = null;
     let user = null;
     let content = null;
@@ -34,7 +50,7 @@ const Block = (props) => {
             <div className={classes.BlockHeader}>   
                 <img src={props.data.user.avatar} 
                     onError = {setBrokenImagePlaceholder}
-                    crossorigin="anonymous"
+                    crossOrigin="anonymous"
                     alt={props.data.user.username} 
                     title={props.data.user.username}/>
                 <span>{props.data.user.username}</span>
@@ -42,7 +58,7 @@ const Block = (props) => {
         )
         content = (
             <div className={classes.BlockContent}>
-                <span>{props.data.tweet}</span>
+                <span dangerouslySetInnerHTML={{ __html: parseText(props.data.tweet)}}></span>
             </div>
         )
         break;
@@ -57,7 +73,7 @@ const Block = (props) => {
             <div className={classes.BlockHeader}>   
                 <img src={props.data.user.avatar} 
                     onError = {setBrokenImagePlaceholder}
-                    crossorigin="anonymous"
+                    crossOrigin="anonymous"
                     alt={props.data.user.username} 
                     title={props.data.user.username}/>
                 <span>{props.data.user.username}</span>
@@ -67,9 +83,9 @@ const Block = (props) => {
             <div className={classes.BlockContent}>
                 <img src={props.data.image.medium} 
                     onError = {setBrokenImagePlaceholder}
-                    crossorigin="anonymous"
+                    crossOrigin="anonymous"
                     alt=""/>
-                <span>{props.data.caption}</span>
+                <span dangerouslySetInnerHTML={{ __html: parseText(props.data.caption)}}></span>
             </div>
         )
         break;
@@ -83,7 +99,7 @@ const Block = (props) => {
         content = (
             <div className={classes.BlockContent}>
                 <img src={props.data.image_url} alt={props.data.link_text} title={props.data.link_text}/>
-                <span>{props.data.text}</span>
+                <span dangerouslySetInnerHTML={{ __html: parseText(props.data.text)}}></span>
             </div>
         )
         break;
@@ -96,7 +112,6 @@ const Block = (props) => {
         <div className={classes.Block}>
             {label}
             {user}
-            <span className={classes.BlockTitle}>{cleanTitle(props.title)}</span>
             {content}
             <div className={classes.BlockDate}>{date}</div>
         </div>

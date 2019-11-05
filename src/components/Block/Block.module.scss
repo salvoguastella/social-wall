@@ -1,8 +1,12 @@
+$red:  rgb(202, 28, 28);
+
 .Block{
-    border: 1px solid black;
-    width: 400px;
+    border: 1px solid #aaa;
+    background-color: #f9f9f9;
+    box-shadow: #bbb 0 2px 5px 0px;
+    width: auto;
     padding: 28px 24px 24px;
-    margin-bottom: 20px;
+    margin-bottom: 8px;
     position:relative;
     border-radius: 4px;
 }
@@ -11,7 +15,7 @@
     position:absolute;
     top: -8px;
     right: -8px;
-    background-color: rgb(202, 28, 28);
+    background-color: $red;
     padding: 4px 4px 3px;
     color: white;
     border-radius: 8px;
@@ -55,6 +59,10 @@
         display:block;
         font-size: 14px;
         color: #666;
+        a, a:hover, a:active{
+            color: $red;
+            text-decoration: none;
+        }
     }
 }
 

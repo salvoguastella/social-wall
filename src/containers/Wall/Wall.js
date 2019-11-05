@@ -1,6 +1,17 @@
 import React, { Component } from 'react'
 import axios from 'axios'
+import classes from './Wall.module.scss'
+//https://github.com/paulcollett/react-masonry-css
+import Masonry from 'react-masonry-css'
+import Filters from '../../components/Filters/Filters'
 import Block from '../../components/Block/Block'
+
+const breakpointColumnsObj = {
+    default: 4,
+    1100: 3,
+    700: 2,
+    500: 1
+  };
 
 export class Wall extends Component {
     state = {
@@ -35,12 +46,15 @@ export class Wall extends Component {
     render() {
         return (
             <div>
-                <ul>
+                <Filters />
+                <Masonry
+                    breakpointCols={breakpointColumnsObj}
+                    className={classes.Wall}
+                    columnClassName={classes.Wall_column}>
                     {this.state.items.map(item => {
                         if(!this.state.filter || +item.service_id === +this.state.filter){
                             return (<Block 
                                 service_id={item.service_id} 
-                                title={item.item_name}
                                 data={item.item_data}
                                 account={item.account_data} 
                                 timeStamp={item.item_created}
@@ -48,7 +62,7 @@ export class Wall extends Component {
                         }
                         else return null
                     })}
-                </ul>
+                </Masonry>
             </div>
         )
     }
