@@ -2,6 +2,7 @@
   "name": "social-wall",
   "version": "0.1.0",
   "private": true,
+  "homepage": "http://www.salvoguastella.altervista.org/social-wall/",
   "dependencies": {
     "@types/node-sass": "^4.11.0",
     "axios": "^0.19.0",
