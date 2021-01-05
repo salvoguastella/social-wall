@@ -5,7 +5,7 @@
   "homepage": "http://www.salvoguastella.altervista.org/social-wall/",
   "dependencies": {
     "@types/node-sass": "^4.11.0",
-    "axios": "^0.19.0",
+    "axios": "^0.21.1",
     "node-sass": "^4.13.0",
     "react": "^16.11.0",
     "react-dom": "^16.11.0",
